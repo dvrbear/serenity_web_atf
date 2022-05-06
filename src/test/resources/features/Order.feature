@@ -13,8 +13,8 @@ Feature: SHOP ORDER VERIFICATION
     Then debug step
     Examples:
       | phoneModel                 |
-      | Samsung Galaxy A32 4/128GB |
+      | Samsung Galaxy A23 6/128GB |
 #      | Maxcom MM428 2G            |
 #      | Maxcom MM826 3G            |
-      | Nokia 3310                 |
+#      | Nokia 3310                 |
 

@@ -34,9 +34,12 @@ public class StepDefinitions extends BaseSteps {
 
     @When("{actor} selects the specific phone model: {}")
     public void selectPhoneFromList(Actor actor, String phoneModel) {
+//        String imgPhone = String.format("//img[@alt='%s']/..", phoneModel);
         String imgPhone = String.format("//img[@alt='%s']", phoneModel);
+        String imgPhoneClick = String.format("//img[@alt='%s']/../../../div[@class='product-info-expanded']", phoneModel);
         assuredScroll(actor, imgPhone);
-        assuredClick(actor, imgPhone);
+        assuredHover(actor, imgPhone);
+        assuredClick(actor, imgPhoneClick);
     }
 
     @When("{actor} proceed buying")
