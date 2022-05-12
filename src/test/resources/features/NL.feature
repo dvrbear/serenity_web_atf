@@ -5,6 +5,9 @@ Feature: SHOP ORDER VERIFICATION
     When he navigates to the phone selection
     And he selects the specific phone model: <phoneModel>
     And he proceed buying
+    And he proceed buying
+    And he proceed buying
+    And he proceed buying
     And he chooses the shipping method: get from store
     And he chooses store location
     And he proceed ordering
@@ -13,9 +16,8 @@ Feature: SHOP ORDER VERIFICATION
     Then debug step
     Examples:
       | phoneModel                 |
-      | Samsung Galaxy A23 6/128GB |
-      | p1                         |
-      | p2                         |
+      | p000000                    |
+      | Samsung Galaxy A23 6/128GB
 #      | Maxcom MM428 2G            |
 #      | Maxcom MM826 3G            |
 #      | Nokia 3310                 |
