@@ -1,7 +1,4 @@
-Feature: SHOP ORDER VERIFICATION
 
-  Scenario Outline: A guest orders a new phone without shipping
-    Given a Guest opens the shop page
     When he navigates to the phone selection
     And he selects the specific phone model: <phoneModel>
     And he proceed buying
@@ -10,15 +7,15 @@ Feature: SHOP ORDER VERIFICATION
     And he proceed buying
     And he chooses the shipping method: get from store
     And he chooses store location
-    And he proceed ordering
-    And he enters personal information
-#    Then he ensures that order is succeeded
+
     Then debug step
     Examples:
       | phoneModel                 |
-      | p000000                    |
+      | p0000
       | Samsung Galaxy A23 6/128GB
-#      | Maxcom MM428 2G            |
-#      | Maxcom MM826 3G            |
-#      | Nokia 3310                 |
 
+1243231423453145
+      345342532
+      4326
+      3426
+      3426
