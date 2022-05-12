@@ -4,7 +4,7 @@ Feature: SHOP ORDER VERIFICATION
     Given a Guest opens the shop page
     When he navigates to the phone selection
     And he selects the specific phone model: <phoneModel>
-    And he
+    And he proceed buying
     And he chooses the shipping method: get from store
     And he chooses store location
     And he proceed ordering
@@ -14,7 +14,6 @@ Feature: SHOP ORDER VERIFICATION
     Examples:
       | phoneModel                 |
       | Samsung Galaxy A23 6/128GB |
-      | Sdksjad|
 #      | Maxcom MM428 2G            |
 #      | Maxcom MM826 3G            |
 #      | Nokia 3310                 |
