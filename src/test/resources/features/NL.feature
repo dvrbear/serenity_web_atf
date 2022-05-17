@@ -9,14 +9,11 @@ Feature: SHOP ORDER VERIFICATION
     And he chooses store location
     And he proceed ordering
     And he enters personal information
-#    Then he ensures that order is succeeded
+    Then he ensures that order is succeeded
     Then debug step
     Examples:
       | phoneModel                 |
       | Samsung Galaxy A23 6/128GB |
       | p1                         |
       | p2                         |
-#      | Maxcom MM428 2G            |
-#      | Maxcom MM826 3G            |
-#      | Nokia 3310                 |
 
