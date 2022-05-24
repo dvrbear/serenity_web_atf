@@ -1,4 +1,4 @@
-@Seat
+@Seat2
 Feature: SEAT SITE 2
 
   Scenario: Seat 3

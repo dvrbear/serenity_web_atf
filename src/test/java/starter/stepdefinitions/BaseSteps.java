@@ -10,6 +10,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import starter.utils.Const;
+
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+import java.util.List;
 
 public class BaseSteps extends PageObject {
     public final int SHORT_TIMEOUT = 10;
@@ -32,6 +41,15 @@ public class BaseSteps extends PageObject {
         } catch (Exception e) {
             locatorNotFound(xpath);
         }
+    }
+
+    public void actionClick(String xpath) {
+        WebElement element = driver.findElement(By.xpath(xpath));
+        Actions action = new Actions(driver);
+        action.moveToElement(element)
+                .click()
+                .build()
+                .perform();
     }
 
     public void input(String text, String xpath) {
@@ -64,11 +82,38 @@ public class BaseSteps extends PageObject {
         }
     }
 
+    public String getClipboard() {
+        Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable t = c.getContents(this);
+        String a;
+        try {
+            a = (String) t.getTransferData(DataFlavor.stringFlavor);
+            return a;
+        } catch (UnsupportedFlavorException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void clickOnFreePLace(String place) {
+        String placeXpath = String.format(Const.placePatern, place);
+        if (isPlaceFree(placeXpath)) {
+            actionClick(placeXpath);
+        }else {
+            failWithMessage(String.format(Const.placeBusyMessage, place));
+        }
+    }
+
+    private boolean isPlaceFree(String placeXpath) {
+        return driver.findElements(By.xpath(placeXpath)).size() > 0;
+    }
+
     private void locatorNotFound(String xpath) {
         failWithMessage(String.format("Locator was not found: [%s]", xpath));
     }
 
-    public void failWithMessage(String message) {
-        Assert.fail(message);
+    private void failWithMessage(String message) {
+        Assert.fail("> > > > > > > " + message);
     }
 }
