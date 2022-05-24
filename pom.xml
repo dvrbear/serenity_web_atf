@@ -107,8 +107,8 @@
                     <systemPropertyVariables>
                         <webdriver.base.url>${webdriver.base.url}</webdriver.base.url>
                     </systemPropertyVariables>
-                    <parallel>classes</parallel>
-                    <parallel>methods</parallel>
+<!--                    <parallel>classes</parallel>-->
+<!--                    <parallel>methods</parallel>-->
                     <useUnlimitedThreads>true</useUnlimitedThreads>
                 </configuration>
                 <executions>
