@@ -1,85 +1,96 @@
 package starter.stepdefinitions;
 
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
+import static starter.utils.ConstXpath.*;
 
 public class StepDefinitions extends BaseSteps {
 
-//    xpaths used in test
-    String user_x = "//*[@id=\"username\"]";
-    String pass_x = "//*[@id=\"password\"]/input";
-    String login_x = "//*[@id=\"kc-login\"]";
-    String token_x = "//*[@id=\"otp\"]";
-    String signin_x = "//*[@id=\"log-in\"]/div[2]/form/input";
-    String booking_x = "//*[@id=\"root\"]/div[1]/div/div/div/div/ul/div[2]/div/span";
-    String workplace_x = "//*[@id=\"root\"]/div[1]/div/div/div/div/ul/div[3]/div/div/div/div[1]/div/div/span";
-    String ztower_x = "//*[@id=\"root\"]/div[1]/div/main/div/div/div/div/div[2]/div[2]/div/div[2]/div";
-    String kitchen_x = "//*[@id=\"root\"]/div[1]/div/main/div/div/div[2]/div/div/div/div";
-    String date_x = "//*[@id=\"booking\"]/div[3]/div[3]/div[2]/div/div[2]/div/div[2]/div/span[35]";
-    String place_x = "//*[@class='rect-place work-place'][@transform='translate(1458.26 2567)']";
 
     @When("opens main page")
     public void openShopPage() {
-        initDriver("https://seat.orange.md/");
+        initDriver("https://senseit-test.orange.md/");
         System.out.println("*********************************************");
         System.out.println(driver.toString());
         System.out.println("*********************************************");
     }
 
-    @When ("introduce username and pass")
+    @When("introduce username and pass")
     public void readFile() {
         input("vpihut", user_x);
         input("Batman1903", pass_x);
     }
 
     @When("press login button")
-    public void loginButt(){
+    public void loginButt() {
         click(login_x);
     }
 
     @When("inserts token")
-    public void insertToken(){
+    public void insertToken() {
         input(getClipboard(), token_x);
     }
 
     @When("sign in seat")
-    public void signIn(){
+    public void signIn() {
         click(signin_x);
     }
 
     @When("go to booking")
-    public void goToBooking(){
+    public void goToBooking() {
+        click(extend_nav_bar_x);
         click(booking_x);
     }
+
     @When("open workplaces")
-    public void openWorkspaces(){
+    public void openWorkspaces() {
         click(workplace_x);
     }
 
     @When("select ZTower")
-    public void selectZTower(){
+    public void selectZTower() {
         click(ztower_x);
     }
 
     @When("select Kitchen")
-    public void selectKitchen(){
+    public void selectKitchen() {
         click(kitchen_x);
     }
 
+    @When("submit booking")
+    public void submitBooking() {
+        click(book_btn);
+        click(close_btn);
+    }
+
+    @When("cancel booking")
+    public void cancelBooking() {
+        click(cancel_btn);
+        click(yes_btn);
+        click(close_btn);
+    }
+
     @When("select date")
-    public void selectDate(){
+    public void selectDate() {
         click(date_x);
     }
 
     @When("select place {}")
-    public void selectPlace(String place){
+    public void selectPlace(String place) {
         clickOnFreePLace(place);
     }
 
-    @Then("debug step")
-    public void debugStep(){
-        System.out.println("debug step");
+    @When("select first free place")
+    public void selectFirstFreePlace() {
+        List<WebElement> list = getAllFreePlaces();
+        if (list.size() > 0) {
+            WebElement element = getAllFreePlaces().get(0);
+            System.out.println(element);
+            actionClick(getAllFreePlaces().get(0));
+        }
     }
 
 }

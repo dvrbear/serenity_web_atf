@@ -11,8 +11,11 @@ Feature: SEAT Test
     And open workplaces
     And select ZTower
     And select Kitchen
+    And select first free place
+    And submit booking
+    And cancel booking
 #    And select date
-    And select place K7.65
-    And select place K7.69
+#    And select place K7.65
+#    And select place K7.69
 
     Then debug step

@@ -20,6 +20,8 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.List;
 
+import static starter.utils.Const.freePlaceForFind;
+
 public class BaseSteps extends PageObject {
     public final int SHORT_TIMEOUT = 10;
     public final int MEDIUM_TIMEOUT = 15;
@@ -45,6 +47,10 @@ public class BaseSteps extends PageObject {
 
     public void actionClick(String xpath) {
         WebElement element = driver.findElement(By.xpath(xpath));
+        actionClick(element);
+    }
+
+    public void actionClick(WebElement element) {
         Actions action = new Actions(driver);
         action.moveToElement(element)
                 .click()
@@ -97,7 +103,7 @@ public class BaseSteps extends PageObject {
     }
 
     public void clickOnFreePLace(String place) {
-        String placeXpath = String.format(Const.placePatern, place);
+        String placeXpath = String.format(Const.freePlacePatern, place);
         if (isPlaceFree(placeXpath)) {
             actionClick(placeXpath);
         }else {
@@ -105,9 +111,22 @@ public class BaseSteps extends PageObject {
         }
     }
 
+    public List<WebElement> getAllFreePlaces(){
+        return driver.findElements(By.xpath(freePlaceForFind));
+    }
+
     private boolean isPlaceFree(String placeXpath) {
         return driver.findElements(By.xpath(placeXpath)).size() > 0;
     }
+
+    public void saveValue(String key, Object value) {
+        Serenity.setSessionVariable(key).to(value);
+    }
+
+    public Object loadValue(String key) {
+        return Serenity.sessionVariableCalled(key);
+    }
+
 
     private void locatorNotFound(String xpath) {
         failWithMessage(String.format("Locator was not found: [%s]", xpath));
