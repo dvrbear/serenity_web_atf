@@ -51,7 +51,10 @@ public class BaseSteps extends PageObject {
 
     public void click(String xpath) {
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))).click();
+            WebElement element = driver.findElement(By.xpath(xpath));
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            sleep(1);
+            element.click();
         } catch (Exception e) {
             locatorNotFound(xpath);
         }
@@ -94,7 +97,6 @@ public class BaseSteps extends PageObject {
         try {
             WebElement element = driver.findElement(By.xpath(xpath));
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-            Thread.sleep(500);
         } catch (Exception e) {
             locatorNotFound(xpath);
         }
@@ -144,6 +146,14 @@ public class BaseSteps extends PageObject {
         byte[] bytes = base32.decode(secretKey);
         String hexKey = Hex.encodeHexString(bytes);
         return TOTP.getOTP(hexKey);
+    }
+
+    private void sleep(int seconds){
+        try {
+            Thread.sleep(seconds * 1000L);
+        }catch (Exception e){
+            failWithMessage("Insomnia");
+        }
     }
 
     private void locatorNotFound(String xpath) {
