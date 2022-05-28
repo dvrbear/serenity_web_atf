@@ -22,6 +22,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static starter.utils.Const.FREE_PLACE_SEARCH_PATTERN;
 
@@ -36,6 +37,7 @@ public class BaseSteps extends PageObject {
     public void initDriver(String baseURL) {
         driver = Serenity.getDriver();
         driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         driver.get(baseURL);
         wait = new WebDriverWait(driver, LONG_TIMEOUT);
     }
