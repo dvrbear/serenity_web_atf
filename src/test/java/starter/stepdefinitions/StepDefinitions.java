@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 import static starter.utils.ConstXpath.*;
+import static starter.utils.Creds.*;
 
 public class StepDefinitions extends BaseSteps {
 
@@ -19,63 +20,55 @@ public class StepDefinitions extends BaseSteps {
     }
 
     @When("introduce username and pass")
-    public void readFile() {
-        input("vpihut", user_x);
-        input("Batman1903", pass_x);
+    public void insertCreds() {
+        input(USER_NAME, USERNAME_XPATH);
+        input(USER_PASSWORD, PASSWORD_XPATH);
+        click(LOGIN_BTN_XPATH);
     }
 
-    @When("press login button")
-    public void loginButt() {
-        click(login_x);
-    }
-
-    @When("inserts token")
-    public void insertToken() {
-        input(getClipboard(), token_x);
-    }
-
-    @When("sign in seat")
-    public void signIn() {
-        click(signin_x);
+    @When("inserts OTP")
+    public void insertOTP() {
+        input(otp(USER_AUTH_KEY), OTP_XPATH);
+        click(SIGNIN_XPATH);
     }
 
     @When("go to booking")
     public void goToBooking() {
-        click(extend_nav_bar_x);
-        click(booking_x);
+        click(EXPAND_NAVBAR_XPATH);
+        click(MAP_XPATH);
     }
 
     @When("open workplaces")
     public void openWorkspaces() {
-        click(workplace_x);
+        click(WORKPLACE_XPATH);
     }
 
     @When("select ZTower")
     public void selectZTower() {
-        click(ztower_x);
+        click(ZTOWER_XPATH);
     }
 
     @When("select Kitchen")
     public void selectKitchen() {
-        click(kitchen_x);
+        click(KITCHEN_XPATH);
     }
 
     @When("submit booking")
     public void submitBooking() {
-        click(book_btn);
-        click(close_btn);
+        click(BOOK_BTN_XPATH);
+        click(CLOSE_BTN_XPATH);
     }
 
     @When("cancel booking")
     public void cancelBooking() {
-        click(cancel_btn);
-        click(yes_btn);
-        click(close_btn);
+        click(CANCEL_BTN_XPATH);
+        click(YES_BTN_XPATH);
+        click(CLOSE_BTN_XPATH);
     }
 
     @When("select date")
     public void selectDate() {
-        click(date_x);
+        click(DATE_XPATH);
     }
 
     @When("select place {}")
@@ -87,8 +80,6 @@ public class StepDefinitions extends BaseSteps {
     public void selectFirstFreePlace() {
         List<WebElement> list = getAllFreePlaces();
         if (list.size() > 0) {
-            WebElement element = getAllFreePlaces().get(0);
-            System.out.println(element);
             actionClick(getAllFreePlaces().get(0));
         }
     }

@@ -3,10 +3,8 @@ Feature: SEAT Test
 
   Scenario: Select place
     Given opens main page
-    Then introduce username and pass
-    And press login button
-    And inserts token
-    And sign in seat
+    When introduce username and pass
+    And inserts OTP
     And go to booking
     And open workplaces
     And select ZTower
