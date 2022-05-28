@@ -1,7 +1,7 @@
 @Seat
-Feature: SEAT Test
+Feature: Booking workplace
 
-  Scenario: Select place
+  Scenario: Book and Cancel workplace
     Given opens main page
     When introduce username and pass
     And inserts OTP

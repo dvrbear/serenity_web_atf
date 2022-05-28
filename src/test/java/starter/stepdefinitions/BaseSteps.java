@@ -15,20 +15,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import starter.utils.Const;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
 import java.util.List;
 
 import static starter.utils.Const.FREE_PLACE_SEARCH_PATTERN;
+import static starter.utils.Const.LONG_TIMEOUT;
 
 public class BaseSteps extends PageObject {
-    public final int SHORT_TIMEOUT = 10;
-    public final int MEDIUM_TIMEOUT = 15;
-    public final int LONG_TIMEOUT = 20;
 
     public WebDriver driver;
     private WebDriverWait wait;
@@ -42,7 +34,7 @@ public class BaseSteps extends PageObject {
 
     public void click(String xpath) {
         try {
-            WebElement element = driver.findElement(By.xpath(xpath));
+            WebElement element = getElement(xpath);
             wait.until(ExpectedConditions.elementToBeClickable(element));
             sleep(1);
             element.click();
@@ -52,8 +44,7 @@ public class BaseSteps extends PageObject {
     }
 
     public void actionClick(String xpath) {
-        WebElement element = driver.findElement(By.xpath(xpath));
-        actionClick(element);
+        actionClick(getElement(xpath));
     }
 
     public void actionClick(WebElement element) {
@@ -74,7 +65,7 @@ public class BaseSteps extends PageObject {
 
     public void hover(String xpath) {
         try {
-            WebElement element = driver.findElement(By.xpath(xpath));
+            WebElement element = getElement(xpath);
             wait.until(ExpectedConditions.elementToBeClickable(element));
             Actions actions = new Actions(driver);
             actions.moveToElement(element);
@@ -86,24 +77,9 @@ public class BaseSteps extends PageObject {
 
     public void scroll(String xpath) {
         try {
-            WebElement element = driver.findElement(By.xpath(xpath));
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", getElement(xpath));
         } catch (Exception e) {
             locatorNotFound(xpath);
-        }
-    }
-
-    public String getClipboard() {
-        Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Transferable t = c.getContents(this);
-        String a;
-        try {
-            a = (String) t.getTransferData(DataFlavor.stringFlavor);
-            return a;
-        } catch (UnsupportedFlavorException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -111,17 +87,13 @@ public class BaseSteps extends PageObject {
         String placeXpath = String.format(Const.FREE_PLACE_PATTERN, place);
         if (isPlaceFree(placeXpath)) {
             actionClick(placeXpath);
-        }else {
+        } else {
             failWithMessage(String.format(Const.MESSAGE_PLACE_BUSY, place));
         }
     }
 
-    public List<WebElement> getAllFreePlaces(){
+    public List<WebElement> getAllFreePlaces() {
         return driver.findElements(By.xpath(FREE_PLACE_SEARCH_PATTERN));
-    }
-
-    private boolean isPlaceFree(String placeXpath) {
-        return driver.findElements(By.xpath(placeXpath)).size() > 0;
     }
 
     public void saveValue(String key, Object value) {
@@ -132,19 +104,27 @@ public class BaseSteps extends PageObject {
         return Serenity.sessionVariableCalled(key);
     }
 
-    public static String otp (String secretKey) {
+    public static String otp(String secretKey) {
         Base32 base32 = new Base32();
         byte[] bytes = base32.decode(secretKey);
         String hexKey = Hex.encodeHexString(bytes);
         return TOTP.getOTP(hexKey);
     }
 
-    private void sleep(int seconds){
+    private void sleep(int seconds) {
         try {
             Thread.sleep(seconds * 1000L);
-        }catch (Exception e){
+        } catch (Exception e) {
             failWithMessage("Insomnia");
         }
+    }
+
+    private boolean isPlaceFree(String placeXpath) {
+        return driver.findElements(By.xpath(placeXpath)).size() > 0;
+    }
+
+    private WebElement getElement(String xpath) {
+        return driver.findElement(By.xpath(xpath));
     }
 
     private void locatorNotFound(String xpath) {
