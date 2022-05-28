@@ -1,20 +1,20 @@
 package starter.utils;
 
 public class ConstXpath {
-    public static String user_x = "//*[@id='username']";
-    public static String pass_x = "//*[@id='password']/input";
-    public static String login_x = "//*[@id='kc-login']";
-    public static String token_x = "//*[@id='otp']";
-    public static String signin_x = "//*[@id='log-in']/div[2]/form/input";
-    public static String workplace_x = "//*[@id='root']/div[1]/div/div/div/div/ul/div[3]/div/div/div/div[1]/div/div/span";
-    public static String ztower_x = "//span[text()='ZTower']";
-    public static String kitchen_x = "//*[@id='root']/div[1]/div/main/div/div/div[2]/div/div/div/div";
-    public static String date_x = "//*[@id='booking']/div[3]/div[3]/div[2]/div/div[2]/div/div[2]/div/span[35]";
-    public static String place_x = "//*[@class='rect-place work-place'][@transform='translate(1458.26 2567)']";
-    public static String extend_nav_bar_x = "//*[@class='nav-bar-heading']";
-    public static String booking_x = "//*[@id='root']/div[1]/div/div/div/div/ul/div[2]/div/div/span";
-    public static String book_btn = "//span[text()='book']";
-    public static String cancel_btn = "//span[text()='cancel']";
-    public static String close_btn = "//span[text()='Close']";
-    public static String yes_btn = "//span[text()='Yes']";
+    public static String USERNAME_XPATH = "//*[@id='username']";
+    public static String PASSWORD_XPATH = "//*[@id='password']/input";
+    public static String LOGIN_BTN_XPATH = "//*[@id='kc-login']";
+    public static String OTP_XPATH = "//*[@id='otp']";
+    public static String SIGNIN_XPATH = "//*[@id='log-in']/div[2]/form/input";
+    public static String WORKPLACE_XPATH = "//*[@id='root']/div[1]/div/div/div/div/ul/div[3]/div/div/div/div[1]/div/div/span";
+    public static String ZTOWER_XPATH = "//span[text()='ZTower']";
+    public static String KITCHEN_XPATH = "//*[@id='root']/div[1]/div/main/div/div/div[2]/div/div/div/div";
+    public static String DATE_XPATH = "//*[@id='booking']/div[3]/div[3]/div[2]/div/div[2]/div/div[2]/div/span[35]";
+    public static String PLACE_XPATH = "//*[@class='rect-place work-place'][@transform='translate(1458.26 2567)']";
+    public static String EXPAND_NAVBAR_XPATH = "//*[@class='nav-bar-heading']";
+    public static String MAP_XPATH = "//*[@id='root']/div[1]/div/div/div/div/ul/div[2]/div/div/span";
+    public static String BOOK_BTN_XPATH = "//span[text()='book']";
+    public static String CANCEL_BTN_XPATH = "//span[text()='cancel']";
+    public static String CLOSE_BTN_XPATH = "//span[text()='Close']";
+    public static String YES_BTN_XPATH = "//span[text()='Yes']";
 }

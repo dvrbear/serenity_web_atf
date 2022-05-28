@@ -1,10 +1,10 @@
 package starter.utils;
 
 public class Const {
-    public static String freePlacePatern =
+    public static String FREE_PLACE_PATTERN =
             "//*[contains(@transform, 'translate')][contains(@class, '%s free-place viewer')]";
-    public static String freePlaceForFind =
+    public static String FREE_PLACE_SEARCH_PATTERN =
             "//*[contains(@transform, 'translate')][contains(@class, 'free-place viewer')]";
-    public static String placeBusyMessage =
+    public static String MESSAGE_PLACE_BUSY =
             "Place %s is busy";
 }

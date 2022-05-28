@@ -1,7 +1,10 @@
 package starter.stepdefinitions;
 
+import de.taimos.totp.TOTP;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.pages.PageObject;
+import org.apache.commons.codec.binary.Base32;
+import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -20,7 +23,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.List;
 
-import static starter.utils.Const.freePlaceForFind;
+import static starter.utils.Const.FREE_PLACE_SEARCH_PATTERN;
 
 public class BaseSteps extends PageObject {
     public final int SHORT_TIMEOUT = 10;
@@ -103,16 +106,16 @@ public class BaseSteps extends PageObject {
     }
 
     public void clickOnFreePLace(String place) {
-        String placeXpath = String.format(Const.freePlacePatern, place);
+        String placeXpath = String.format(Const.FREE_PLACE_PATTERN, place);
         if (isPlaceFree(placeXpath)) {
             actionClick(placeXpath);
         }else {
-            failWithMessage(String.format(Const.placeBusyMessage, place));
+            failWithMessage(String.format(Const.MESSAGE_PLACE_BUSY, place));
         }
     }
 
     public List<WebElement> getAllFreePlaces(){
-        return driver.findElements(By.xpath(freePlaceForFind));
+        return driver.findElements(By.xpath(FREE_PLACE_SEARCH_PATTERN));
     }
 
     private boolean isPlaceFree(String placeXpath) {
@@ -127,6 +130,12 @@ public class BaseSteps extends PageObject {
         return Serenity.sessionVariableCalled(key);
     }
 
+    public static String otp (String secretKey) {
+        Base32 base32 = new Base32();
+        byte[] bytes = base32.decode(secretKey);
+        String hexKey = Hex.encodeHexString(bytes);
+        return TOTP.getOTP(hexKey);
+    }
 
     private void locatorNotFound(String xpath) {
         failWithMessage(String.format("Locator was not found: [%s]", xpath));
