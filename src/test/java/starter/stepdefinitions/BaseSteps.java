@@ -34,6 +34,13 @@ public class BaseSteps extends PageObject {
     public WebDriver driver;
     private WebDriverWait wait;
 
+    public static String auth (String secretKey) {
+        Base32 base32 = new Base32();
+        byte[] bytes = base32.decode(secretKey);
+        String hexKey = Hex.encodeHexString(bytes);
+        return TOTP.getOTP(hexKey);
+    }
+
     public void initDriver(String baseURL) {
         driver = Serenity.getDriver();
         driver.manage().window().maximize();
