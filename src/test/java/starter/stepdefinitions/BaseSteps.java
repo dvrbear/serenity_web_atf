@@ -1,5 +1,7 @@
 package starter.stepdefinitions;
 
+import com.ibm.icu.text.SimpleDateFormat;
+import com.ibm.icu.util.Calendar;
 import de.taimos.totp.TOTP;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.pages.PageObject;
@@ -13,6 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.yecht.debug.ScannerOutput;
 import starter.utils.Const;
 
 import java.awt.*;
@@ -21,7 +24,12 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static starter.utils.Const.FREE_PLACE_SEARCH_PATTERN;
 
@@ -124,6 +132,21 @@ public class BaseSteps extends PageObject {
         return driver.findElements(By.xpath(placeXpath)).size() > 0;
     }
 
+    public void checkWhatMonth(String month, String dayOfMonth) throws ParseException {
+        sleep(1);
+        String date = month + " " + dayOfMonth;
+        Date todaysDate = new Date();
+        boolean checkIfNextMoth = theMonth(todaysDate.getMonth()).equals(month);
+        if (!moreThanTwoWeeks(month,dayOfMonth)){
+            click("//*[@id='booking']/div[3]/div[3]/div[2]/div/div[1]/span[2]");
+            click(String.format(Const.DATE_PATERRN, date));
+            failWithMessage("You cannot book place in more than 14 days");
+        }else if(!checkIfNextMoth){
+                click("//*[@id='booking']/div[3]/div[3]/div[2]/div/div[1]/span[2]");
+            }
+        click(String.format(Const.DATE_PATERRN, date));
+    }
+
     public void saveValue(String key, Object value) {
         Serenity.setSessionVariable(key).to(value);
     }
@@ -147,11 +170,31 @@ public class BaseSteps extends PageObject {
         }
     }
 
+    private static boolean moreThanTwoWeeks(String month, String dayOfMonth) throws ParseException {
+        int dayOfMonthNumber = Integer.parseInt(dayOfMonth);
+        Date currentDate = new Date();
+        Date date = new SimpleDateFormat("MMMM", Locale.ENGLISH).parse(month); ///In order to convert String (name of the month) into Int.
+        Calendar currentCalendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
+        currentCalendar.setTime(currentDate);
+        calendar.setTime(date);
+
+        LocalDate dateBefore = LocalDate.of(currentDate.getYear(),currentDate.getMonth() + 1,currentCalendar.get(Calendar.DAY_OF_MONTH));
+        LocalDate dateAfter = LocalDate.of(currentDate.getYear(), calendar.get(Calendar.MONTH)+1, dayOfMonthNumber);
+        long noOfDaysBetween = ChronoUnit.DAYS.between(dateBefore, dateAfter);
+        return noOfDaysBetween <= 14;
+    }
+
+    private static String theMonth(int month){
+        String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        return monthNames[month];
+    }
+
     private void locatorNotFound(String xpath) {
         failWithMessage(String.format("Locator was not found: [%s]", xpath));
     }
 
-    private void failWithMessage(String message) {
+    private static void failWithMessage(String message) {
         Assert.fail("> > > > > > > " + message);
     }
 }

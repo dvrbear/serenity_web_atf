@@ -7,4 +7,6 @@ public class Const {
             "//*[contains(@transform, 'translate')][contains(@class, 'free-place viewer')]";
     public static String MESSAGE_PLACE_BUSY =
             "Place %s is busy";
+
+    public static String DATE_PATERRN = "//span[contains(@aria-label, '%s, 2022')]";
 }

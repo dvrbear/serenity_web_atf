@@ -3,6 +3,7 @@ package starter.stepdefinitions;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 
+import java.text.ParseException;
 import java.util.List;
 
 import static starter.utils.ConstXpath.*;
@@ -14,6 +15,7 @@ public class StepDefinitions extends BaseSteps {
     @When("opens main page")
     public void openShopPage() {
         initDriver("https://senseit-test.orange.md/");
+//        initDriver("https://seat.orange.md/");
         System.out.println("*********************************************");
         System.out.println(driver.toString());
         System.out.println("*********************************************");
@@ -66,9 +68,9 @@ public class StepDefinitions extends BaseSteps {
         click(CLOSE_BTN_XPATH);
     }
 
-    @When("select date")
-    public void selectDate() {
-        click(DATE_XPATH);
+    @When("select date {}  {}")
+    public void selectDate(String month, String dayOfMonth) throws ParseException {
+        checkWhatMonth(month,dayOfMonth);
     }
 
     @When("select place {}")
