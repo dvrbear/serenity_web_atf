@@ -4,6 +4,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static starter.utils.ConstXpath.*;
 import static starter.utils.Creds.*;
@@ -34,6 +35,7 @@ public class StepDefinitions extends BaseSteps {
 
     @When("go to booking")
     public void goToBooking() {
+        waitABit(2000);
         click(EXPAND_NAVBAR_XPATH);
         click(MAP_XPATH);
     }
@@ -61,6 +63,7 @@ public class StepDefinitions extends BaseSteps {
 
     @When("cancel booking")
     public void cancelBooking() {
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         click(CANCEL_BTN_XPATH);
         click(YES_BTN_XPATH);
         click(CLOSE_BTN_XPATH);
