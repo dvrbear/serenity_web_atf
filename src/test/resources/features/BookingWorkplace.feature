@@ -15,5 +15,4 @@ Feature: Booking workplace
 #    And select date
 #    And select place K7.65
 #    And select place K7.69
-
     Then debug step
