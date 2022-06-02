@@ -34,6 +34,7 @@ public class StepDefinitions extends BaseSteps {
 
     @When("go to booking")
     public void goToBooking() {
+        waitABit(2000);
         click(EXPAND_NAVBAR_XPATH);
         click(MAP_XPATH);
     }
