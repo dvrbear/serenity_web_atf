@@ -1,4 +1,4 @@
-package starter.stepdefinitions;
+package starter.implementation;
 
 import de.taimos.totp.TOTP;
 import net.serenitybdd.core.Serenity;
@@ -16,19 +16,35 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import starter.utils.Const;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static starter.utils.Const.FREE_PLACE_SEARCH_PATTERN;
 import static starter.utils.Const.LONG_TIMEOUT;
 
-public class BaseSteps extends PageObject {
+public class BasePageObject extends PageObject {
 
     public WebDriver driver;
     private WebDriverWait wait;
+
+    public BasePageObject() {
+        driver = Serenity.getDriver();
+        driver.manage().window().maximize();
+        wait = new WebDriverWait(driver, LONG_TIMEOUT);
+        System.out.println("*********************************************");
+        System.out.println(driver.toString());
+        System.out.println("*********************************************");
+    }
+
+    public void gotoURL(String url){
+        driver.get(url);
+    }
 
     public void initDriver(String baseURL) {
         driver = Serenity.getDriver();
         driver.manage().window().maximize();
         driver.get(baseURL);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver, LONG_TIMEOUT);
     }
 
@@ -111,7 +127,7 @@ public class BaseSteps extends PageObject {
         return TOTP.getOTP(hexKey);
     }
 
-    private void sleep(int seconds) {
+    public void sleep(int seconds) {
         try {
             Thread.sleep(seconds * 1000L);
         } catch (Exception e) {
