@@ -5,7 +5,9 @@ Feature: Booking workplace
     Given opens main page
     When introduce username and pass
     And inserts OTP
-    And navigate to office : ZityMall_2
+    And navigate to office : Ztower_1
+    And selects date : June 22
+    And selects place by hours: from 08:00 to 18:00
 
 
 #    And go to booking
