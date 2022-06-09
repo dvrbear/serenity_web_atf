@@ -7,6 +7,7 @@ public class ConstXpath {
     public static String LOGIN_BTN_XP = "//*[@id='kc-login']";
     public static String OTP_XP = "//*[@id='otp']";
     public static String SIGNIN_XP = "//input[@value='Sign in']";
+    public static String SWITCH_BTN_XPATH = "//span[text()='Daily']/ancestor::div[@class='react-switch-bg']";
     public static String DATE_XP = "//*[@id='booking']/div[3]/div[3]/div[2]/div/div[2]/div/div[2]/div/span[35]";
     public static String PLACE_XP = "//*[@class='rect-place work-place'][@transform='translate(1458.26 2567)']";
     public static String BOOK_BTN_XP = "//span[text()='book']";

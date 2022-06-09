@@ -9,6 +9,7 @@ public class LoginDef {
 
     @When("opens main page")
     public void openShopPage() {
+//        login.gotoURL("https://seat.orange.md/");
         login.gotoURL("https://senseit-test.orange.md/");
     }
 

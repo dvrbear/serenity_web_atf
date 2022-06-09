@@ -71,6 +71,17 @@ public class BasePageObject extends PageObject {
                 .perform();
     }
 
+    public void timeDrag(String sourceElm, String targetElm){
+        sleep(1);
+        WebElement startTimeElement = driver.findElement(By.xpath(String.format(Const.HOUR_PATERRN, sourceElm)));
+        WebElement endTimeElement = driver.findElement(By.xpath(String.format("//td[contains(@data-time,'%s')]/ancestor::tr[position()=1]/preceding-sibling::tr[position()=1]",targetElm)));
+        scroll(startTimeElement);
+        Actions builder = new Actions(driver);
+        builder.clickAndHold(startTimeElement).build().perform();
+        scroll(endTimeElement);
+        builder.release(endTimeElement).build().perform();
+    }
+
     public void input(String text, String xpath) {
         try {
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))).sendKeys(text);
@@ -96,6 +107,14 @@ public class BasePageObject extends PageObject {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", getElement(xpath));
         } catch (Exception e) {
             locatorNotFound(xpath);
+        }
+    }
+
+    public void scroll(WebElement element) {
+        try {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        } catch (Exception e) {
+            elementNotFound(element.toString());
         }
     }
 
@@ -143,11 +162,15 @@ public class BasePageObject extends PageObject {
         return driver.findElement(By.xpath(xpath));
     }
 
+    private void elementNotFound(String str) {
+        failWithMessage(String.format("Element was not found: [%s]", str));
+    }
+
     private void locatorNotFound(String xpath) {
         failWithMessage(String.format("Locator was not found: [%s]", xpath));
     }
 
-    private void failWithMessage(String message) {
+    void failWithMessage(String message) {
         Assert.fail("> > > > > > > " + message);
     }
 }
